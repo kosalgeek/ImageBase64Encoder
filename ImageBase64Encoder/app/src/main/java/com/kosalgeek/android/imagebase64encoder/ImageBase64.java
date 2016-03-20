@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 
 public class ImageBase64 {
@@ -145,7 +146,12 @@ public class ImageBase64 {
         return inSampleSize;
     }
 
-    private Bitmap decodeSampledBitmapFromFile(String filePath, int reqWidth, int reqHeight){
+    private Bitmap decodeSampledBitmapFromFile(String filePath, int reqWidth, int reqHeight) throws FileNotFoundException {
+
+        File file = new File(filePath);
+        if(!file.exists()){
+            throw new FileNotFoundException();
+        }
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -159,7 +165,12 @@ public class ImageBase64 {
         return bitmap;
     }
 
-    private Bitmap decodeFile(String filePath){
+    private Bitmap decodeFile(String filePath) throws FileNotFoundException {
+
+        File file = new File(filePath);
+        if(!file.exists()){
+            throw new FileNotFoundException();
+        }
 
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
         return bitmap;
